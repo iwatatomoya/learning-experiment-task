@@ -1,0 +1,464 @@
+/* 全体リセットと基本設定 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  background-color: #f0f2f5;
+  color: #222;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* 画面切り替え制御 */
+.screen {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ===========================
+   1. スタート画面 & 3. 終了画面
+   =========================== */
+#start-screen,
+#end-screen {
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 40px 48px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+.wide-card {
+  max-width: 680px;
+}
+
+.card h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #1a202c;
+}
+
+.lead-text {
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2b6cb0;
+  box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
+}
+
+/* ボタン共通 */
+.btn {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.05s;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.primary {
+  background-color: #2b6cb0;
+  color: #ffffff;
+}
+
+.btn.primary:hover {
+  background-color: #2c5282;
+}
+
+.btn.secondary {
+  background-color: #e2e8f0;
+  color: #2d3748;
+}
+
+.btn.secondary:hover {
+  background-color: #cbd5e0;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* ===========================
+   2. タスク（問題）画面
+   =========================== */
+#task-screen {
+  flex-direction: column;
+}
+
+/* ヘッダー */
+.task-header {
+  height: 48px;
+  background-color: #1a365d;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-title {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.divider {
+  color: #718096;
+}
+
+.progress-badge {
+  background-color: #2b6cb0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* メインコンテナ（左：文章＋問題、右端：メモ欄） */
+.main-container {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 48px);
+  overflow: hidden;
+}
+
+/* 左側カラム（上部：文章、下部：問題・回答） */
+.task-left {
+  flex: 7.2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: 2px solid #cbd5e0;
+}
+
+/* 共通ツールバー */
+.panel-toolbar {
+  height: 42px;
+  background-color: #edf2f7;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  flex-shrink: 0;
+}
+
+.panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.marker-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tool-hint {
+  font-size: 12px;
+  color: #718096;
+}
+
+.btn-tool {
+  padding: 5px 12px;
+  border: 1px solid #cbd5e0;
+  background-color: #ffffff;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-tool:hover {
+  background-color: #f7fafc;
+  border-color: #a0aec0;
+}
+
+.btn-tool.marker-yellow {
+  border-bottom: 3px solid #ecc94b;
+}
+
+.btn-tool.marker-yellow.active {
+  background-color: #fef08a;
+  border-color: #d69e2e;
+  border-bottom: 3px solid #b7791f;
+  color: #744210;
+  box-shadow: 0 0 0 2px rgba(236, 201, 75, 0.4);
+}
+
+.btn-tool.underline-red {
+  border-bottom: 3px solid #e53e3e;
+}
+
+.btn-tool.underline-red.active {
+  background-color: #fed7d7;
+  border-color: #e53e3e;
+  border-bottom: 3px solid #9b2c2c;
+  color: #742a2a;
+  box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.3);
+}
+
+/* 上部：文章パネル */
+.passage-panel {
+  flex: 5.5;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-bottom: 2px solid #cbd5e0;
+  min-height: 0;
+}
+
+.passage-content {
+  flex: 1;
+  padding: 28px 36px;
+  font-size: 17px;
+  line-height: 2.0;
+  color: #1a202c;
+  overflow-y: auto;
+  user-select: text;
+}
+
+/* ツール選択中はブラウザの標準青色テキスト選択を抑止し、スムーズに線を引けるようにする */
+.passage-content.tool-active {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ① 蛍光ペン（マーカー用）カーソル */
+.passage-content.tool-highlight,
+.passage-content.tool-highlight .char {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M2 22l4-1 13-13-5-5L1 16l1 6z' fill='%23fef08a' stroke='%23ca8a04' stroke-width='1.5'/%3E%3Cpath d='M14 3l5 5 2-2a1.5 1.5 0 0 0 0-2.1l-2.9-2.9a1.5 1.5 0 0 0-2.1 0L14 3z' fill='%23eab308' stroke='%23854d0e' stroke-width='1.5'/%3E%3Cpath d='M2 22l3-1-2-2-1 3z' fill='%23ca8a04'/%3E%3C/svg%3E") 2 22, crosshair;
+}
+
+/* ② 赤ペン（下線用）カーソル */
+.passage-content.tool-underline,
+.passage-content.tool-underline .char {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M2 22l4.5-1.2L19 8.3 15.7 5 3.2 17.5 2 22z' fill='%23fecaca' stroke='%23b91c1c' stroke-width='1.5'/%3E%3Cpath d='M15.7 5l3.3 3.3 1.8-1.8a1.2 1.2 0 0 0 0-1.7l-1.6-1.6a1.2 1.2 0 0 0-1.7 0L15.7 5z' fill='%23ef4444' stroke='%23991b1b' stroke-width='1.5'/%3E%3Cpath d='M2 22l3.2-1-2.2-2.2L2 22z' fill='%23dc2626'/%3E%3C/svg%3E") 2 22, crosshair;
+}
+
+/* ③ 消しゴムカーソル（既存の印の上にホバーした時、および消去ドラッグ中） */
+.passage-content.tool-highlight:not(.dragging-add) .char.highlight-mark:hover,
+.passage-content.tool-underline:not(.dragging-add) .char.underline-mark:hover,
+.passage-content.dragging-remove,
+.passage-content.dragging-remove .char {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 21H3l-1-3 12-12 6 6-9 9h-4z' fill='%23ffffff' stroke='%23334155' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M10 10l6 6 4-4-6-6-4 4z' fill='%2393c5fd' stroke='%231e40af' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cline x1='2' y1='22' x2='14' y2='22' stroke='%2364748b' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") 3 21, pointer;
+}
+
+/* ペースト禁止通知トースト */
+.paste-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: rgba(26, 32, 44, 0.92);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+}
+
+.paste-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.passage-content p {
+  margin-bottom: 12px;
+}
+
+/* 文章内のマーカー・下線スタイル */
+.char {
+  padding: 2px 0;
+}
+
+.char.highlight-mark {
+  background-color: #fef08a;
+}
+
+.char.underline-mark {
+  text-decoration: underline;
+  text-decoration-color: #e53e3e;
+  text-decoration-thickness: 2.5px;
+  text-underline-offset: 4px;
+}
+
+/* 下部：問題文及び回答欄パネル */
+.question-panel {
+  flex: 4.5;
+  background-color: #f8fafc;
+  padding: 20px 32px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.question-header {
+  margin-bottom: 12px;
+}
+
+.attribute-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+  border: 1px solid #bee3f8;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.question-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1.5;
+}
+
+.answer-area {
+  flex: 1;
+  display: flex;
+  margin-bottom: 12px;
+  min-height: 0;
+}
+
+#answer-input {
+  width: 100%;
+  height: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: none;
+  font-family: inherit;
+}
+
+#answer-input:focus {
+  outline: none;
+  border-color: #2b6cb0;
+  box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.12);
+}
+
+.action-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 右端カラム：メモ欄 */
+.task-right {
+  flex: 2.8;
+  display: flex;
+  flex-direction: column;
+  background-color: #fffef8;
+  height: 100%;
+}
+
+#memo-input {
+  flex: 1;
+  width: 100%;
+  border: none;
+  padding: 18px;
+  font-size: 14px;
+  line-height: 1.7;
+  background-color: transparent;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+  color: #2d3748;
+}
+
+/* 終了画面の仮データ確認ボックス */
+.debug-log-box {
+  margin-top: 20px;
+  text-align: left;
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.debug-log-box summary {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+}
+
+#log-preview {
+  margin-top: 10px;
+  font-size: 12px;
+  background-color: #1a202c;
+  color: #e2e8f0;
+  padding: 12px;
+  border-radius: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+

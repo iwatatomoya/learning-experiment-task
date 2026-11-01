@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学習実験タスクシステム（プロトタイプ）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. スタート画面 -->
+  <section id="start-screen" class="screen active">
+    <div class="card">
+      <h1>学習実験タスク</h1>
+      <p class="lead-text">
+        実験へのご協力ありがとうございます。<br>
+        お名前と学籍番号を入力・確認し、「実験を開始する」ボタンを押してください。
+      </p>
+      <div class="form-group">
+        <label for="student-name">お名前</label>
+        <input type="text" id="student-name" placeholder="例：早稲田 太郎" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="student-id">学籍番号</label>
+        <input type="text" id="student-id" placeholder="例：1J24F000" autocomplete="off">
+      </div>
+      <button id="start-btn" class="btn primary full-width">実験を開始する</button>
+    </div>
+  </section>
+
+  <!-- 2. タスク（問題）画面 -->
+  <section id="task-screen" class="screen">
+    <!-- 上部ヘッダーバー -->
+    <header class="task-header">
+      <div class="header-left">
+        <span class="app-title">学習実験タスク</span>
+        <span class="divider">|</span>
+        <span class="user-info">被験者: <strong id="display-user">-</strong></span>
+      </div>
+      <div class="header-right">
+        <span class="progress-badge">問題 <span id="current-q-num">1</span> / <span id="total-q-num">2</span></span>
+      </div>
+    </header>
+
+    <!-- メインエリア（左：文章＋問題・回答、右端：メモ欄） -->
+    <div class="main-container">
+      
+      <!-- 左側カラム（上部：文章、下部：問題文・回答欄） -->
+      <div class="task-left">
+        
+        <!-- 画面上部：文章エリア -->
+        <div class="passage-panel">
+          <div class="panel-toolbar">
+            <span class="panel-title">📖 課題文章</span>
+            <div class="marker-tools">
+              <span class="tool-hint">※ツールを選択してから文字をドラッグ（再ドラッグで消去）：</span>
+              <button type="button" id="highlight-btn" class="btn-tool marker-yellow" aria-pressed="false">🖍 マーカー</button>
+              <button type="button" id="underline-btn" class="btn-tool underline-red" aria-pressed="false"><u>U</u> 下線</button>
+              <button type="button" id="clear-format-btn" class="btn-tool">全消去</button>
+            </div>
+          </div>
+          <div id="passage-text" class="passage-content">
+            <!-- questions.js から文章が挿入されます -->
+          </div>
+        </div>
+
+        <!-- 画面下部：問題文及び回答欄 -->
+        <div class="question-panel">
+          <div class="question-header">
+            <span class="attribute-badge" id="q-attribute">属性</span>
+            <h2 id="question-text">問題文がここに入ります</h2>
+          </div>
+          <div class="answer-area">
+            <textarea id="answer-input" placeholder="ここに回答を入力してください..."></textarea>
+          </div>
+          <div class="action-bar">
+            <button type="button" id="submit-btn" class="btn primary">回答を提出して次へ</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 右端カラム：メモ欄 -->
+      <aside class="task-right">
+        <div class="panel-toolbar">
+          <span class="panel-title">📝 メモ欄</span>
+        </div>
+        <textarea id="memo-input" placeholder="問題に取り組む際のメモや思考の整理に自由にお使いください..."></textarea>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- 3. 実験終了画面 -->
+  <section id="end-screen" class="screen">
+    <div class="card wide-card">
+      <h1>実験終了</h1>
+      <p class="lead-text">
+        すべての課題が終了しました。お疲れ様でした！<br>
+        実験者の指示があるまで、この画面のままお待ちください。
+      </p>
+
+      <!-- 仮の記録データ確認用（プロトタイプ確認用） -->
+      <details class="debug-log-box">
+        <summary>🔍 取得された仮データの確認（実験者用）</summary>
+        <pre id="log-preview"></pre>
+      </details>
+
+      <div style="margin-top: 20px;">
+        <button type="button" id="restart-btn" class="btn secondary">最初に戻る（テスト用）</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ペースト禁止時の通知トースト -->
+  <div id="paste-toast" class="paste-toast">⚠️ 解答欄・メモ欄への貼り付け（ペースト）は禁止されています</div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
