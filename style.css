@@ -46,7 +46,9 @@ body {
 }
 
 .wide-card {
-  max-width: 680px;
+  max-width: 780px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .card h1 {
@@ -433,21 +435,93 @@ body {
   color: #2d3748;
 }
 
-/* 終了画面の仮データ確認ボックス */
+/* 終了画面の結果確認（自分の回答と模範解答）ボックス */
+.result-review-box,
 .debug-log-box {
-  margin-top: 20px;
+  margin-top: 16px;
   text-align: left;
   background-color: #f7fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 12px;
+  border-radius: 8px;
+  padding: 12px 16px;
 }
 
+.result-review-box summary,
 .debug-log-box summary {
-  font-size: 13px;
-  font-weight: 600;
-  color: #4a5568;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2d3748;
   cursor: pointer;
+  user-select: none;
+}
+
+.result-review-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.result-item {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.result-item-question {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.result-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.result-column {
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.result-column.user-ans {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.result-column.model-ans {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.result-col-label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.result-column.user-ans .result-col-label {
+  color: #4a5568;
+}
+
+.result-column.model-ans .result-col-label {
+  color: #15803d;
+}
+
+.result-col-text {
+  color: #1a202c;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 #log-preview {

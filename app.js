@@ -46,6 +46,7 @@ const questionText = document.getElementById("question-text");
 const answerInput = document.getElementById("answer-input");
 const memoInput = document.getElementById("memo-input");
 const logPreview = document.getElementById("log-preview");
+const resultReviewList = document.getElementById("result-review-list");
 
 // --- 画面切り替え関数 ---
 function showScreen(targetScreen) {
@@ -164,7 +165,37 @@ submitBtn.addEventListener("click", () => {
 function finishExperiment() {
   sessionData.finishedAt = new Date().toISOString();
   logPreview.textContent = JSON.stringify(sessionData, null, 2);
+  renderResultReview();
   showScreen(endScreen);
+}
+
+// 各問題の「自分の回答」と「模範解答」を並べて一覧表示する
+function renderResultReview() {
+  if (!resultReviewList) return;
+
+  resultReviewList.innerHTML = questionList
+    .map((q, idx) => {
+      const response = sessionData.responses[idx];
+      const userAnswer = response && response.answer ? response.answer : "（未回答）";
+      const modelAnswer = q.modelAnswer || "（模範解答なし）";
+
+      return `
+        <div class="result-item">
+          <div class="result-item-question">${escapeHtml(q.question)}</div>
+          <div class="result-compare-grid">
+            <div class="result-column user-ans">
+              <span class="result-col-label">あなたの回答</span>
+              <div class="result-col-text">${escapeHtml(userAnswer)}</div>
+            </div>
+            <div class="result-column model-ans">
+              <span class="result-col-label">模範解答</span>
+              <div class="result-col-text">${escapeHtml(modelAnswer)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
 }
 
 restartBtn.addEventListener("click", () => {
